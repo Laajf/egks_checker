@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  selenium-app:
+    build: .
+    ports:
+      - "8000:8000" # Замените на нужный порт, если ваш сервис работает на другом порту
+    volumes:
+      - .:/app
+    environment:
+      - DISPLAY=:99 # Укажите переменные окружения, если нужно
+    command: ["poetry", "run", "python", "main.py"]
