@@ -1,4 +1,3 @@
-import subprocess
 from routes.routes import app
 import uvicorn
 

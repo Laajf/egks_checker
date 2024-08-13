@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, BackgroundTasks
 #import uvicorn
 #from egks_cheker.api.service.service import get_data
 from api.service.service import get_data
@@ -28,11 +28,15 @@ async def home():
     return FileResponse(HTML_FILE_PATH, media_type='text/html')
 
 @app.get("/get_data_card/{number}")
-def get_data_card(number: str):
-    number = str(number)
-    print(f"номер {number}")
+def get_data_card(number: str,):
     text = get_data.get_money_data(number)
     return {"message": text}
 
-#if __name__ == "__main__":
-    #uvicorn.run(app, host="0.0.0.0", port=8000)
+
+@app.put("/post_update_bd")
+def update_bd():
+    pass
+
+@app.post("/new_user")
+def create_new_user():
+    pass
