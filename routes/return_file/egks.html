@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ввод номера карты ЕГКС</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333333;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .message {
+            margin-top: 20px;
+            font-size: 16px;
+            color: #333333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Введите номер карты ЕГКС</h1>
+        <form id="card-form">
+            <input type="text" id="card-number" name="card-number" placeholder="Номер карты" required>
+            <button type="submit">Отправить</button>
+        </form>
+        <div id="response-message" class="message"></div>
+    </div>
+
+    <script>
+        document.getElementById('card-form').addEventListener('submit', async function(event) {
+            event.preventDefault(); // Предотвращаем стандартное поведение формы
+
+            const cardNumber = document.getElementById('card-number').value;
+            const responseMessage = document.getElementById('response-message');
+
+            try {
+                // Формируем URL с учетом номера карты
+                const url = `http://0.0.0.0:8000/get_data_card/${encodeURIComponent(cardNumber)}`;
+
+
+                console.log('Запрашиваем URL:', url); // Логируем URL для отладки
+
+                // Отправляем GET-запрос на сервер
+                const response = await fetch(url);
+
+                // Проверяем успешность ответа
+                if (!response.ok) {
+                    throw new Error('Ошибка сети: ' + response.statusText);
+                }
+
+                // Получаем ответ от сервера
+                const result = await response.json();
+
+                // Отображаем ответ от сервера
+                responseMessage.textContent = `Ответ от сервера: ${result.message}`;
+                responseMessage.style.color = 'green';
+            } catch (error) {
+                // Обработка ошибок и отображение сообщения об ошибке
+                console.error('Ошибка запроса:', error); // Логируем ошибку для отладки
+                responseMessage.textContent = `Ошибка: ${error.message}`;
+                responseMessage.style.color = 'red';
+            }
+        });
+    </script>
+</body>
+</html>

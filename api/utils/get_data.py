@@ -48,10 +48,10 @@ def get_data_money(number_card):
 
             ticket_text = ticket_element.text
             print(f"Found text: {ticket_text}")
+            return ticket_text
 
     except Exception as e:
         print(f"Element not found or another error occurred: {e}")
     finally:
         driver.quit()
 
-get_data_money("000464198")

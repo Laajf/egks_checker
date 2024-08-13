@@ -9,4 +9,4 @@ services:
       - .:/app
     environment:
       - DISPLAY=:99 # Укажите переменные окружения, если нужно
-    command: ["poetry", "run", "python", "main.py"]
+    command: ["poetry", "run", "python", "start.py"] # Укажите путь к скрипту внутри контейнера

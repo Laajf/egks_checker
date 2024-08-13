@@ -41,4 +41,5 @@ RUN pip install poetry && poetry install --no-root --only main
 COPY . /app/
 
 # Указываем команду по умолчанию
-CMD ["poetry", "run", "python", "main.py"]
+CMD ["poetry", "run", "python", "api/routes.py"]
+
