@@ -1,6 +1,4 @@
 from fastapi import FastAPI, BackgroundTasks
-#import uvicorn
-#from egks_cheker.api.service.service import get_data
 from api.service.service import get_data
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
@@ -37,6 +35,10 @@ def get_data_card(number: str,):
 def update_bd():
     pass
 
-@app.post("/new_user")
+@app.post("/new_user/{number_card}")
+def create_new_user(number_card:str):
+    return get_data.create_new_user(number_card)
+
+@app.get("/get_user")
 def create_new_user():
-    pass
+    return get_data.bd_read()

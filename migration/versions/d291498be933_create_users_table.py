@@ -21,10 +21,10 @@ depends_on: Union[str, Sequence[str], None] = None
 def upgrade():
     op.create_table(
         'users',
-        sa.Column('number_card', sa.Integer),
-        sa.Column('chat_id', sa.Integer),
-        sa.Column('chat_id_number_card', sa.Integer,primary_key = True),
-        sa.Column('money', sa.Integer),
+        sa.Column('number_card', sa.String),
+        sa.Column('chat_id', sa.String),
+        sa.Column('chat_id_number_card', sa.String,primary_key = True),
+        sa.Column('money', sa.String),
     )
 
 def downgrade():

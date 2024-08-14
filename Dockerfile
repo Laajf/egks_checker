@@ -17,6 +17,7 @@ RUN apt-get update && apt-get install -y \
     libxrandr2 \
     libgtk-3-0 \
     libgbm-dev \
+    libpq-dev gcc \
     libasound2
 
 
@@ -41,5 +42,5 @@ RUN pip install poetry && poetry install --no-root --only main
 COPY . /app/
 
 # Указываем команду по умолчанию
-CMD ["poetry", "run", "python", "api/routes.py"]
+CMD ["poetry", "run", "python", "start.py"]
 
