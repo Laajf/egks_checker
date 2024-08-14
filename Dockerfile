@@ -34,6 +34,9 @@ RUN pip install webdriver-manager
 # Устанавливаем рабочую директорию
 WORKDIR /app/
 
+# Устанавливаем alembic
+RUN pip install alembic
+
 # Копируем проект и устанавливаем зависимости
 COPY pyproject.toml poetry.lock* /app/
 RUN pip install poetry && poetry install --no-root --only main

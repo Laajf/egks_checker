@@ -3,13 +3,23 @@ version: '3.8'
 services:
   selenium-app:
     build: .
+    depends_on:
+      - db
     ports:
-      - "8000:8000"   # Замените на нужный порт, если ваш сервис работает на другом порту
+      - "8000:8000"
     volumes:
       - .:/app
     environment:
-      - DISPLAY=:99 # Укажите переменные окружения, если нужно
-    command: ["poetry", "run", "python", "start.py"] # Укажите путь к скрипту внутри контейнера
+      - DISPLAY=:99
+      - DATABASE_URL=postgresql://postgres:11111@db:5432/tg_bot_egks
+    entrypoint: ["sh", "-c", "poetry run alembic upgrade head && poetry run python start.py"]
+    # Обратите внимание на `|| true`, чтобы избежать остановки при ошибке миграций
 
-
-
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 11111
+      POSTGRES_DB: tg_bot_egks
+    ports:
+      - "5432:5432"

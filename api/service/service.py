@@ -13,12 +13,11 @@ class get_data:
         print("вызвалось")
         text_card = get_data_money(number_card)
         dictionary = text_to_json(text_card)
-        print(f"это текст {dictionary}")
-        return dictionary
+        return postgresql.bd_update(dictionary)
 
     @staticmethod
     def bd_read():
-        postgresql.bd_read()
+        return postgresql.bd_read()
 
 
 
