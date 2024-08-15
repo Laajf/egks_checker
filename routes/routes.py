@@ -32,8 +32,8 @@ def get_data_card(number: str,):
 
 
 @app.put("/post_update_bd")
-def update_bd():
-    pass
+def update_data_in_bd():
+    return get_data.data_update_bd()
 
 @app.post("/new_user/{number_card}")
 def create_new_user(number_card:str):
@@ -42,3 +42,7 @@ def create_new_user(number_card:str):
 @app.get("/get_user")
 def create_new_user():
     return get_data.bd_read()
+
+@app.get("/bd_find_min")
+def find_min():
+    return get_data.bd_find_min_money()
