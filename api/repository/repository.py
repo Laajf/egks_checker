@@ -12,7 +12,7 @@ class postgresql:
 
 
     @staticmethod
-    def bd_update(data):
+    def bd_create(data):
         try:
             data_base_url = 'postgresql://postgres:11111@db:5432/tg_bot_egks'
             engine = create_engine(data_base_url)
