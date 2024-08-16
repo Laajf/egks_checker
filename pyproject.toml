@@ -21,6 +21,8 @@ celery = "^5.4.0"
 psycopg2 = "2.9.9"
 psycopg2-binary = "2.9.5"
 alembic = "^1.13.2"
+telebot = "^0.0.5"
+pytelegrambotapi = "^4.22.1"
 
 
 [build-system]
