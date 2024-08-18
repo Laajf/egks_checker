@@ -33,7 +33,13 @@ services:
       - DATABASE_URL=postgresql://postgres:11111@db:5432/tg_bot_egks
     entrypoint: [ "sh", "-c", "poetry install && poetry run python start_tg_bot.py" ]
 
-
+  auto_send:
+    build: .
+    depends_on:
+      - tg-bot
+    volumes:
+      - .:/app
+    entrypoint: [ "sh", "-c", "poetry run python start_update.py" ]
 
 networks:
   default:
