@@ -31,18 +31,29 @@ def handle_ekks_command(message):
         chat_id = message.chat.id
         response_message = f"Команда принята! Ваш chat ID: {chat_id}, число: {number}"
         bot.reply_to(message, response_message)
-        response = requests.get(f"http://selenium-app:8000/get_data_card/{str(number)}")
-        response = response.json()
-        if "money" in response:
-            print(f"Вот запрос которого мы заслужили: {response['money']}")
-            response = "у вас осталось(также вы занесены в бд и вам будут приходить сообщения если у вас буде баланс " \
-                       "меньше 48 рублей)" + response['money']
-            bot.reply_to(message, response)
+        response = requests.get(f"http://selenium-app:8000/get_data_card/{str(number)}/{str(chat_id)}")
+        response.raise_for_status()  # Проверяем успешность запроса
+        response_json = response.json()  # Попробуем распарсить JSON
+
+        # Проверка типа ответа
+        if "message" in response_json:
+            message_content = response_json["message"]
+
+            # Обрабатываем случай, когда "message" является JSON-объектом
+            if isinstance(message_content, dict) and "number_card" in message_content:
+                money = message_content["money"]
+                response_message = f"Количество денег: {money}"
+                bot.reply_to(message, response_message)
+
+            else:
+                response_message = message_content
+                bot.reply_to(message, response_message)
+
         else:
-            response_if_money = ""
-            response = "у вас осталось(также вы занесены в бд и вам будут приходить сообщения если у вас буде баланс " \
-                       "меньше 48 рублей)" + response_if_money
-            bot.reply_to(message, response)
+            response_message = response.text  # Если "message" нет, обрабатываем как текст
+            bot.reply_to(message, response_message)
+
+
     except ValueError:
         response_message = "Команда неправильного формата. Используйте: /ekks <число>"
         bot.reply_to(message, response_message)

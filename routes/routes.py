@@ -25,9 +25,9 @@ async def home():
 
     return FileResponse(HTML_FILE_PATH, media_type='text/html')
 
-@app.get("/get_data_card/{number}")
-def get_data_card(number: str,):
-    text = get_data.get_money_data(number)
+@app.get("/get_data_card/{number}/{chat_id}")
+def get_data_card(number: str, chat_id: str):
+    text = get_data.get_money_data(number,chat_id)
     return {"message": text}
 
 
@@ -46,3 +46,7 @@ def create_new_user():
 @app.get("/bd_find_min")
 def find_min():
     return get_data.bd_find_min_money()
+
+@app.delete("/bd_delete")
+def bd():
+    return get_data.delete_data()

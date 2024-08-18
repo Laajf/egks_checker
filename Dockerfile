@@ -18,6 +18,7 @@ RUN apt-get update && apt-get install -y \
     libgtk-3-0 \
     libgbm-dev \
     libpq-dev gcc \
+    redis-tools \
     libasound2
 
 
@@ -37,10 +38,14 @@ WORKDIR /app/
 # Устанавливаем alembic
 RUN pip install alembic
 
+RUN pip install flower
+
+
 # Копируем проект и устанавливаем зависимости
 COPY pyproject.toml poetry.lock* /app/
 RUN pip install poetry && poetry install --no-root --only main
 
+ 
 # Копируем код приложения
 COPY . /app/
 

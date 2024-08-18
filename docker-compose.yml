@@ -13,7 +13,6 @@ services:
       - DISPLAY=:99
       - DATABASE_URL=postgresql://postgres:11111@db:5432/tg_bot_egks
     entrypoint: ["sh", "-c", "poetry run alembic upgrade head && poetry run python start.py"]
-    # Обратите внимание на `|| true`, чтобы избежать остановки при ошибке миграций
 
   db:
     image: postgres:latest
@@ -24,7 +23,6 @@ services:
     ports:
       - "5432:5432"
 
-
   tg-bot:
     build: .
     depends_on:
@@ -34,3 +32,9 @@ services:
     environment:
       - DATABASE_URL=postgresql://postgres:11111@db:5432/tg_bot_egks
     entrypoint: [ "sh", "-c", "poetry install && poetry run python start_tg_bot.py" ]
+
+
+
+networks:
+  default:
+    driver: bridge

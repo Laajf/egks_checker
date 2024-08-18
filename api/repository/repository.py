@@ -12,7 +12,7 @@ class postgresql:
 
 
     @staticmethod
-    def bd_create(data):
+    def bd_create(data, chat_id):
         try:
             data_base_url = 'postgresql://postgres:11111@db:5432/tg_bot_egks'
             engine = create_engine(data_base_url)
@@ -20,15 +20,15 @@ class postgresql:
 
             class data_card(Base):
                 __tablename__ = "users"
-                number_card = Column(Integer)
-                chat_id = Column(Integer)
-                chat_id_number_card = Column(Integer, primary_key=True)
-                money = Column(Integer)
+                number_card = Column(String)
+                chat_id = Column(String)
+                chat_id_number_card = Column(String, primary_key=True)
+                money = Column(String)
 
             Session = sessionmaker(bind=engine)
             session = Session()
-            user = data_card(number_card=data.get("ticket_number"), chat_id="chat_id",
-                             chat_id_number_card=data.get("ticket_number") + "chat_id", money=data.get("balance"))
+            user = data_card(number_card=data.get("ticket_number"), chat_id=str(chat_id),
+                             chat_id_number_card=data.get("ticket_number") + str(chat_id), money=data.get("balance"))
             session.add(user)
 
             session.commit()
@@ -76,4 +76,27 @@ class postgresql:
         users_list = json.loads(users_json)
 
         return users_list
+
+    @staticmethod
+    def bd_delete():
+        data_base_url = 'postgresql://postgres:11111@db:5432/tg_bot_egks'
+        engine = create_engine(data_base_url)
+        Base = declarative_base()
+
+        class data_card(Base):
+            __tablename__ = "users"
+            number_card = Column(String)
+            chat_id = Column(String)
+            chat_id_number_card = Column(String, primary_key=True)
+            money = Column(String)
+
+        Session = sessionmaker(bind=engine)
+        session = Session()
+
+        users = session.query(data_card).all()
+        for user in users:
+            session.delete(user)
+            print("удаление прошло успешно")
+            session.commit()
+        return users
 

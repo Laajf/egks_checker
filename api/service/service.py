@@ -5,7 +5,7 @@ from ..utils.in_text import find_card_info,remove_leading_zero,extract_amount,re
 
 class get_data:
     @staticmethod
-    def get_money_data(number_card):
+    def get_money_data(number_card, chat_id):
         data = postgresql.bd_read()
         print(f"данные {data}")
         card_info = find_card_info(remove_leading_zero(number_card), data)
@@ -13,7 +13,7 @@ class get_data:
             print("это")
             text_card = get_data_money(number_card)
             dictionary = text_to_json(text_card)
-            postgresql.bd_create(dictionary)
+            postgresql.bd_create(dictionary, chat_id)
             return text_card
         else:
             print("не это")
@@ -51,5 +51,8 @@ class get_data:
         print("аптейт закончен")
         return data
 
+    @staticmethod
+    def delete_data():
+        return postgresql.bd_delete()
 
 

@@ -17,12 +17,15 @@ uvicorn = "^0.30.5"
 pydantic = "^2.8.2"
 aiosqlite = "^0.20.0"
 sqlalchemy = "^2.0.32"
-celery = "^5.4.0"
+celery = "5.0.5"
 psycopg2 = "2.9.9"
 psycopg2-binary = "2.9.5"
 alembic = "^1.13.2"
 telebot = "^0.0.5"
 pytelegrambotapi = "^4.22.1"
+flower = "2.0.1"
+redis = "^5.0.8"
+setuptools = "^72.2.0"
 
 
 [build-system]
